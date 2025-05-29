@@ -10,6 +10,9 @@
       background: #2f2f2f;
       margin: 0;
       padding: 1rem;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
     }
     h1 {
       text-align: center;
@@ -17,7 +20,7 @@
     }
     .buttons {
       text-align: center;
-      margin-bottom: 1rem;
+      margin-top: 1rem;
     }
     button {
       margin: 0 0.5rem;
@@ -34,7 +37,7 @@
     }
     textarea {
       width: 95%;
-      height: 80vh;
+      flex-grow: 1;
       padding: 1rem;
       font-size: 13px;
       border-radius: 10px;
@@ -62,12 +65,12 @@
 
   <h1>Story Edit</h1>
 
+  <textarea id="note" placeholder="Start typing..."></textarea>
+
   <div class="buttons">
     <button onclick="startEditing()">Edit</button>
-    <button onclick="publishNote()">Publish</button>
+    <button onclick="saveNote()">Save</button>
   </div>
-
-  <textarea id="note" placeholder="Start typing..."></textarea>
 
   <footer>Keep going you got this!</footer>
 
@@ -76,11 +79,10 @@
   <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
 
   <script>
-    // ✅ Your full Firebase config including the correct databaseURL
     const firebaseConfig = {
       apiKey: "AIzaSyBzP9GpcuqT5XhUh0o9_mflAgKDv1a7I6w",
       authDomain: "story-edit-f82d2.firebaseapp.com",
-      databaseURL: "https://story-edit-f82d2-default-rtdb.firebaseio.com", // <-- ✅ This was missing
+      databaseURL: "https://story-edit-f82d2-default-rtdb.firebaseio.com",
       projectId: "story-edit-f82d2",
       storageBucket: "story-edit-f82d2.appspot.com",
       messagingSenderId: "534624735124",
@@ -92,14 +94,14 @@
     const db = firebase.database();
     const textarea = document.getElementById("note");
 
-    // 🔄 Load saved note
+    // Load saved note
     db.ref("sharedNote").on("value", (snapshot) => {
       if (snapshot.exists()) {
         textarea.value = snapshot.val();
       }
     });
 
-    // 💾 Save note when typing
+    // Auto-save on input
     textarea.addEventListener("input", () => {
       db.ref("sharedNote").set(textarea.value);
     });
@@ -109,9 +111,9 @@
       textarea.focus();
     }
 
-    function publishNote() {
+    function saveNote() {
       textarea.disabled = true;
-      alert("Note locked for publishing.");
+      alert("Note saved and locked.");
     }
   </script>
 
