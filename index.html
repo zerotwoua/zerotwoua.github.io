@@ -1,0 +1,96 @@
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Story Edit</title>
+  <style>
+    body {
+      font-family: 'Roboto Mono', monospace;
+      background: #2f2f2f;
+      margin: 0;
+      padding: 1rem;
+    }
+    h1 {
+      text-align: center;
+      color: #356fec;
+    }
+    .buttons {
+      text-align: center;
+      margin-bottom: 1rem;
+    }
+    button {
+      margin: 0 0.5rem;
+      padding: 0.5rem 1.2rem;
+      border: none;
+      border-radius: 8px;
+      background-color: #356fec;
+      color: white;
+      cursor: pointer;
+      font-size: 14px;
+    }
+    button:hover {
+      background-color: #274db3;
+    }
+    textarea {
+      width: 95%;
+      height: 80vh;
+      padding: 1rem;
+      font-size: 13px;
+      border-radius: 10px;
+      border: 1px solid #8a8a8a;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      resize: none;
+      background-color: #272727;   
+      color: #939393;
+      font-family: 'Times New Roman', serif;
+    }
+    textarea:focus {
+      outline: none;
+      border: 1px solid #2a60d2;
+    }
+    footer {
+      text-align: center;
+      margin-top: 1rem;
+      color: #7a7a7a;
+      font-family: 'Times New Roman', serif;
+      font-size: 12px;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Story Edit</h1>
+
+  <div class="buttons">
+    <button onclick="startEditing()">Edit</button>
+    <button onclick="publishNote()">Publish</button>
+  </div>
+
+  <textarea id="note" placeholder="Start typing..."></textarea>
+
+  <footer>Keep going you got this!</footer>
+
+  <script>
+    const textarea = document.getElementById("note");
+
+    // Load saved content
+    textarea.value = localStorage.getItem("webNotepad") || "";
+
+    // Save while typing
+    textarea.addEventListener("input", () => {
+      localStorage.setItem("webNotepad", textarea.value);
+    });
+
+    function startEditing() {
+      textarea.disabled = false;
+      textarea.focus();
+    }
+
+    function publishNote() {
+      textarea.disabled = true;
+      alert("Note locked for publishing.");
+    }
+  </script>
+
+</body>
+</html>
