@@ -71,12 +71,12 @@
 
   <footer>Keep going you got this!</footer>
 
-  <!-- 🔥 Firebase SDKs -->
+  <!-- Firebase SDKs -->
   <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
   <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
 
   <script>
-    // 🔧 Replace these with YOUR Firebase config (from Firebase Console)
+    // 🔧 Replace these values with your own Firebase project settings
     const firebaseConfig = {
       apiKey: "YOUR_API_KEY",
       authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
@@ -89,17 +89,16 @@
 
     firebase.initializeApp(firebaseConfig);
     const db = firebase.database();
-
     const textarea = document.getElementById("note");
 
-    // 🔄 Load saved note from Firebase
+    // Load data from Firebase
     db.ref("sharedNote").on("value", (snapshot) => {
       if (snapshot.exists()) {
         textarea.value = snapshot.val();
       }
     });
 
-    // 💾 Save to Firebase when typing
+    // Save data to Firebase on input
     textarea.addEventListener("input", () => {
       db.ref("sharedNote").set(textarea.value);
     });
